@@ -1,34 +1,32 @@
-# Passport-Yandex
+# Passport-VK-ID
 
-[Passport](http://passportjs.org/) strategy for authenticating with [Yandex](http://yandex.ru/)
+[Passport](http://passportjs.org/) strategy for authenticating with [VK ID](https://id.vk.com/about/business/go/docs/ru/vkid/latest/methods)
 using the OAuth 2.0 API.
-
-This module lets you authenticate using Yandex in your Node.js applications.
-By plugging into Passport, Yandex authentication can be easily and
-unobtrusively integrated into any application or framework that supports
-[Connect](http://www.senchalabs.org/connect/)-style middleware, including
-[Express](http://expressjs.com/).
 
 ## Installation
 
-    $ npm install passport-yandex
+    $ npm install passport-vk-id
 
 ## Usage
 
 #### Configure Strategy
 
-The Yandex authentication strategy authenticates users using a Yandex
+The VK ID authentication strategy authenticates users using a VK/Mail.ru/OK.ru
 account and OAuth 2.0 tokens.  The strategy requires a `verify` callback, which
 accepts these credentials and calls `done` providing a user, as well as
 `options` specifying a client ID, client secret, and callback URL.
 
-    passport.use(new YandexStrategy({
-        clientID: YANDEX_CLIENT_ID,
-        clientSecret: YANDEX_CLIENT_SECRET,
-        callbackURL: "http://127.0.0.1:3000/auth/yandex/callback"
+    passport.use(new VKStrategy({
+        clientID: VK_APP_CLIENT_ID,
+        clientSecret: VK_APP_CLIENT_SECRET,
+        callbackURL: "http://127.0.0.1:3000/auth/vk/callback"
+        scope: ["vkid.personal_info", "email"], // optional
+        provider: "vkid", // optional (values: "vkid", "mail_ru", "ok_ru") 
+        lang_id: 1,
+        scheme: "light"
       },
       function(accessToken, refreshToken, profile, done) {
-        User.findOrCreate({ yandexId: profile.id }, function (err, user) {
+        User.findOrCreate({ id: profile.user_id }, function (err, user) {
           return done(err, user);
         });
       }
@@ -36,47 +34,36 @@ accepts these credentials and calls `done` providing a user, as well as
 
 #### Authenticate Requests
 
-Use `passport.authenticate()`, specifying the `'yandex'` strategy, to
+Use `passport.authenticate()`, specifying the `'vk-id'` strategy, to
 authenticate requests.
 
 For example, as route middleware in an [Express](http://expressjs.com/)
 application:
 
-    app.get('/auth/yandex',
-      passport.authenticate('yandex'),
+    app.get('/auth/vk',
+      passport.authenticate('vk-id'),
       function(req, res){
-        // The request will be redirected to Yandex for authentication, so
+        // The request will be redirected to VK ID for authentication, so
         // this function will not be called.
       });
 
-    app.get('/auth/yandex/callback', 
-      passport.authenticate('yandex', { failureRedirect: '/login' }),
+    app.get('/auth/vk/callback', 
+      passport.authenticate('vk-id', { failureRedirect: '/login' }),
       function(req, res) {
         // Successful authentication, redirect home.
         res.redirect('/');
       });
 
-## Examples
-
-For a complete, working example, refer to the [login example](https://github.com/gurugray/passport-yandex/tree/master/examples/login).
-
-## Tests
-
-    $ npm install --dev
-    $ make test
-
-[![Build Status](https://secure.travis-ci.org/gurugray/passport-yandex.png)](http://travis-ci.org/gurugray/passport-yandex)
-
 ## Credits
 
-  - [Sergey Sergeev](http://github.com/gurugray)
-  - [Jared Hanson](http://github.com/jaredhanson)
+  - [asedias](http://github.com/asedias)
+  - [onceamore](http://github.com/onceamore)
 
 ## License
 
 (The MIT License)
 
-Copyright (c) 2012 Sergey Sergeev
+Copyright (c) 2024
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
