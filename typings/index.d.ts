@@ -15,6 +15,7 @@ export interface Profile {
 
 interface Config {
     clientID: string;
+    clientSecret: string;
     callbackURL: string;
 }
 
