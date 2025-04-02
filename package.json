@@ -10,6 +10,12 @@
     "type": "git",
     "url": "git://github.com/asedias/passport-vk-id.git"
   },
+  "contributors": [
+    {
+      "name": "onceamore",
+      "email": "stas.nikiforov.00@gmail.com"
+    }
+  ],
   "bugs": {
     "url": "http://github.com/asedias/passport-vk-id/issues"
   },
