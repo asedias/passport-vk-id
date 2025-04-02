@@ -1,15 +1,16 @@
 import {Strategy as BaseStrategy} from 'passport';
 
 export interface VKIDProfile {
-    user_id: string;
+    id: string;
     provider: string;
-    first_name: string;
-    last_name: string;
+    name: {
+        first_name: string;
+        last_name: string;
+    }
     phone?: string;
-    avatar: string;
+    profileUrl: string;
     email?: string;
-    sex: string;
-    verified: string;
+    gender: string;
     [key: string]: any
 }
 
