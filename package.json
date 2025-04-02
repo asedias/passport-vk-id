@@ -1,0 +1,42 @@
+{
+  "name": "passport-vk-id",
+  "version": "0.0.1",
+  "description": "VK ID authentication strategy for Passport.",
+  "author": {
+    "name": "asedias",
+    "email": "asedias@yandex.ru"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/asedias/passport-vk-id.git"
+  },
+  "bugs": {
+    "url": "http://github.com/asedias/passport-vk-id/issues"
+  },
+  "main": "lib/passport-vk-id",
+  "typings": "./typings/index.d.ts",
+  "dependencies": {
+    "pkginfo": "0.3.x",
+    "passport-oauth": "1.0.x"
+  },
+  "devDependencies": {
+    "@types/passport": "^1.0.0",
+    "vows": "~0.7.0"
+  },
+  "scripts": {
+    "test": "NODE_PATH=lib node_modules/.bin/vows test/*-test.js"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "license": "MIT",
+  "keywords": [
+    "passport",
+    "vk",
+    "vkid",
+    "auth",
+    "authn",
+    "authentication",
+    "identity"
+  ]
+}
