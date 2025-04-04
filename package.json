@@ -1,6 +1,6 @@
 {
   "name": "passport-vk-id",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "VK ID authentication strategy for Passport.",
   "author": {
     "name": "asedias",
