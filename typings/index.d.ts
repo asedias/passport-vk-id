@@ -2,6 +2,7 @@ import {Strategy as BaseStrategy} from 'passport';
 
 export interface VKIDProfile {
     id: string;
+    provider: string;
     name: {
         first_name: string;
         last_name: string;
