@@ -1,20 +1,34 @@
-import {Strategy as BaseStrategy} from 'passport';
+import {Strategy as BaseStrategy, Profile as PassportProfile} from 'passport';
+import * as oauth2 from "passport-oauth2";
+import { Request } from "express";
 
-export interface VKIDProfile {
+type VKIDProvider = "vkid" | "ok_ru" | "mail_ru";
+
+export interface VKIDProfile extends Omit<PassportProfile, 'emails' | 'username'> {
     id: string;
-    provider: string;
+    provider: VKIDProvider;
     name: {
-        first_name: string;
-        last_name: string;
+        familyName: string;
+        givenName: string;
+        middleName?: string;
     }
     phone?: string;
-    profileUrl: string;
     email?: string;
     gender: string;
+    _json: {
+        "user_id": string,
+        "first_name": string,
+        "last_name": string,
+        "phone"?: string,
+        "avatar": string,
+        "email"?: string,
+        "sex": number,
+        "verified": string,
+        "birthday": string
+    }
     [key: string]: any
 }
 
-type VKIDProvider = "vkid" | "ok_ru" | "mail_ru";
 type VKIDScope =
     "vkid.personal_info"    //  Фамилия, имя, пол, фото профиля, дата рождения. Базовое право доступа, которое по умолчанию используется для всех приложений
     | "email"	            //  Доступ к почте пользователя
@@ -34,7 +48,12 @@ type VKIDScope =
     | "stats"	            //	Доступ к статистике сообществ и приложений пользователя, администратором которых он является
     | "notes"	            //	Доступ к заметкам
 
-export interface Config {
+export type OAuth2StrategyOptionsWithoutRequiredURLs = Pick<
+    oauth2._StrategyOptionsBase,
+    Exclude<keyof oauth2._StrategyOptionsBase, "authorizationURL" | "tokenURL">
+>;
+
+export interface _StrategyOptionsBase extends OAuth2StrategyOptionsWithoutRequiredURLs {
     clientID: string;
     clientSecret: string;
     callbackURL: string;
@@ -44,13 +63,34 @@ export interface Config {
     scheme?: "light" | "dark";
 }
 
-type Callback<U> = (
-    accessToken: string,
-    refreshToken: string,
-    profile: VKIDProfile,
-    done: (error: string | null, user: U) => void
-) => void;
+export interface StrategyOptions extends _StrategyOptionsBase {
+    passReqToCallback?: false | undefined;
+}
+
+export interface StrategyOptionsWithRequest extends _StrategyOptionsBase {
+    passReqToCallback: true;
+}
+
+export type VerifyCallback = oauth2.VerifyCallback;
 
 export class Strategy<U> extends BaseStrategy {
-    public constructor(config: Config, callback: Callback<U>);
+    constructor(
+        options: StrategyOptions,
+        verify: (
+            accessToken: string,
+            refreshToken: string,
+            profile: VKIDProfile,
+            done: VerifyCallback,
+        ) => void,
+    );
+    constructor(
+        options: StrategyOptionsWithRequest,
+        verify: (
+            req: Request,
+            accessToken: string,
+            refreshToken: string,
+            profile: VKIDProfile,
+            done: VerifyCallback,
+        ) => void,
+    );
 }
