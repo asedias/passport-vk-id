@@ -48,6 +48,17 @@ type VKIDScope =
     | "stats"	            //	Доступ к статистике сообществ и приложений пользователя, администратором которых он является
     | "notes"	            //	Доступ к заметкам
 
+export enum VKIDLang {
+    RUS = 0,
+    UKR = 1,
+    ENG = 3,
+    SPA = 4,
+    GERMAN = 6,
+    POL = 15,
+    FRA = 15,
+    TURKEY = 82,
+}
+
 export type OAuth2StrategyOptionsWithoutRequiredURLs = Pick<
     oauth2._StrategyOptionsBase,
     Exclude<keyof oauth2._StrategyOptionsBase, "authorizationURL" | "tokenURL">
@@ -59,7 +70,7 @@ export interface _StrategyOptionsBase extends OAuth2StrategyOptionsWithoutRequir
     callbackURL: string;
     scope?: VKIDScope[];
     provider?: VKIDProvider;
-    lang_id?: number;
+    lang_id?: VKIDLang;
     scheme?: "light" | "dark";
 }
 
