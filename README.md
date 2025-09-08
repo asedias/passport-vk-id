@@ -1,6 +1,6 @@
 # Passport-VK-ID
 
-[Passport](http://passportjs.org/) strategy for authenticating with [VK ID](https://id.vk.com/about/business/go/docs/ru/vkid/latest/methods)
+[Passport](http://passportjs.org/) strategy for authenticating with [VK ID](https://id.vk.ru/about/business/go/docs/ru/vkid/latest/methods)
 using the OAuth 2.0 API.
 
 ## Installation
