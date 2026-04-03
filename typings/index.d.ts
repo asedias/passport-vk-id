@@ -29,7 +29,7 @@ export interface VKIDProfile extends Omit<PassportProfile, 'emails' | 'username'
     [key: string]: any
 }
 
-type VKIDScope =
+export type VKIDScope =
     "vkid.personal_info"    //  Фамилия, имя, пол, фото профиля, дата рождения. Базовое право доступа, которое по умолчанию используется для всех приложений
     | "email"	            //  Доступ к почте пользователя
     | "phone"	            //  Доступ к номеру телефона
@@ -59,6 +59,11 @@ export enum VKIDLang {
     TURKEY = 82,
 }
 
+export type VKIDPrompt =
+    "none"                  //процесс авторизации без взаимодействия с пользователем
+    | "login"               //процесс всегда стартует с аутентификации пользователя, даже если он уже вошёл в VK ID
+    | "consent"             //всегда отображается форма запроса разрешений доступов, даже если пользователь давал их ранее
+
 export type OAuth2StrategyOptionsWithoutRequiredURLs = Pick<
     oauth2._StrategyOptionsBase,
     Exclude<keyof oauth2._StrategyOptionsBase, "authorizationURL" | "tokenURL">
@@ -72,6 +77,7 @@ export interface _StrategyOptionsBase extends OAuth2StrategyOptionsWithoutRequir
     provider?: VKIDProvider;
     lang_id?: VKIDLang;
     scheme?: "light" | "dark";
+    prompt?: VKIDPrompt;
 }
 
 export interface StrategyOptions extends _StrategyOptionsBase {
